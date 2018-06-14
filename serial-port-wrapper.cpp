@@ -32,6 +32,8 @@ int mapBaudRateToTermiosValue(SERIAL_PORT_WRAPPER::BAUDRATE baud)
         case BAUDRATE::HZ_115200:
             return B115200;
     }
+    // Should never reach this statement, but the compiler doesn't know that
+    return B0;
 }
 
 } // anonymous namespace
@@ -126,7 +128,7 @@ int SERIAL_PORT_WRAPPER::writeOut(char const * const input_buffer, unsigned int 
 {
     // Lock the scoped mutex
     std::lock_guard<std::mutex> lock(this->my_mutex);
-    write(this->my_serial_file_descriptor, input_buffer, length);
+    return static_cast<int>(write(this->my_serial_file_descriptor, input_buffer, length));
 }
 
 int SERIAL_PORT_WRAPPER::readIn(char * const read_buffer)

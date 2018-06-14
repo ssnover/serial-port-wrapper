@@ -28,7 +28,7 @@ int main()
     char in_buffer[256] = {0};
     std::cout << "Received " << my_serial_port.readIn(in_buffer) << " characters over UART." << std::endl;
 
-    for (int i = 0; i < sizeof(in_buffer); ++i)
+    for (unsigned int i = 0; i < sizeof(in_buffer); ++i)
     {
         if (in_buffer[i] != (i + 1))
         {
