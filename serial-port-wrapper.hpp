@@ -9,11 +9,12 @@
 #define SERIAL_PORT_WRAPPER_SERIAL_PORT_WRAPPER_HPP
 
 #include <memory>
+#include <mutex>
 
 class SERIAL_PORT_WRAPPER
 {
 public:
-    enum class BAUDRATE
+    enum class BAUDRATE : uint8_t
     {
         HZ_9600 = 0u,
         HZ_19200 = 1u,
@@ -31,7 +32,7 @@ public:
 
     ~SERIAL_PORT_WRAPPER();
 
-    void setBaudRate(BAUDRATE baud);
+    bool setBaudRate(BAUDRATE baud);
 
     int writeOut(char const * const input_buffer, unsigned int length);
 
@@ -46,6 +47,7 @@ private:
     char const * const my_filepath;
     int my_serial_file_descriptor;
     BAUDRATE my_baudrate;
+    std::mutex my_mutex;
 
 }; // class SERIAL_PORT_WRAPPER
 
