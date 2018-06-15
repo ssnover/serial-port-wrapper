@@ -3,12 +3,13 @@
  * purpose: Entry point for the test program.
  */
 #include <iostream>
+#include "serial-port-wrapper-intf.hpp"
 #include "serial-port-wrapper.hpp"
 
 
 int main()
 {
-    SERIAL_PORT_WRAPPER & my_serial_port(SERIAL_PORT_WRAPPER::getInstance());
+    SERIAL_PORT_WRAPPER_INTF & my_serial_port(SERIAL_PORT_WRAPPER::getInstance());
 
     char buffer[16] = {0};
 

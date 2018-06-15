@@ -1,26 +1,18 @@
 /*
  * file: serial-port-wrapper.hpp
  * purpose: Class definition for a C++ class which wraps the interface to a
- * Linux
- *          serial port for the Raspberry Pi.
+ *          Linux serial port for the Raspberry Pi.
  */
 
 #ifndef SERIAL_PORT_WRAPPER_SERIAL_PORT_WRAPPER_HPP
 #define SERIAL_PORT_WRAPPER_SERIAL_PORT_WRAPPER_HPP
 
-#include <memory>
 #include <mutex>
+#include "serial-port-wrapper-intf.hpp"
 
-class SERIAL_PORT_WRAPPER
+class SERIAL_PORT_WRAPPER final : public SERIAL_PORT_WRAPPER_INTF
 {
 public:
-    enum class BAUDRATE : uint8_t
-    {
-        HZ_9600 = 0u,
-        HZ_19200 = 1u,
-        HZ_38400 = 2u,
-        HZ_115200 = 3u,
-    };
 
     static SERIAL_PORT_WRAPPER & getInstance();
 
@@ -32,11 +24,15 @@ public:
 
     ~SERIAL_PORT_WRAPPER();
 
-    bool setBaudRate(BAUDRATE baud);
+    /*
+     * SERIAL_PORT_WRAPPER_INTF Methods
+     */
 
-    int writeOut(char const * const input_buffer, unsigned int length);
+    bool setBaudRate(BAUDRATE baud) override;
 
-    int readIn(char * const read_buffer);
+    int writeOut(char const * const input_buffer, unsigned int length) override;
+
+    int readIn(char * const read_buffer) override;
 
 private:
     /*
